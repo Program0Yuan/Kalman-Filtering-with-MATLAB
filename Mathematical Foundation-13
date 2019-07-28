@@ -1,0 +1,30 @@
+clear all
+close all
+
+g1=ones(1,10); 
+g2=ones(1,10); 
+number1 = 7; % SVN 1
+number2 = 3; % SVN 2
+
+g2mod=[2,3,4,5,1,2,1,2,3,2,3,5,6,7,8,9,1,2,3,4,5,6,1,4,5,6,7,8,1,2,3,4;...
+    6,7,8,9,9,10,8,9,10,3,4,6,7,8,9,10,4,5,6,7,8,9,3,6,7,8,9,10,6,7,8,9]; 
+
+length = 1023; % length of CA code in a chip
+for i=1:length  
+    g2i=mod(g2(g2mod(1,number1))+g2(g2mod(2,number1)),2); 
+    code(i)=mod(g2i+g1(10),2);  
+    g1_updated=[mod(g1(3)+g1(10),2)]; 
+    g1=[g1_updated g1(1:9)];  
+    g2_updated=[mod(g2(2)+g2(3)+g2(6)+g2(8)+g2(9)+g2(10),2)]; 
+    g2=[g2_updated g2(1:9)]; 
+end
+cacode=repmat(code,1,2); 
+cacode(find(cacode==1))=-1;
+cacode(find(cacode==0))=1;
+cacode1 = cacode; % CA code for SVN 1
+code(find(code==1))=-1;
+code(find(code==0))=1;
+cacode12 = code;
+
+g1=ones(1,10); 
+g2=ones(1,10); 
